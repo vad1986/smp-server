@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d947659-2aec-4166-b7ba-4e17f06e113e" name="Default" comment="">
+    <list default="true" id="9d947659-2aec-4166-b7ba-4e17f06e113e" name="Default" comment="test">
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../Sandbox/testProject/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../Sandbox/testProject/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../Sandbox/testProject/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../../../Sandbox/testProject/testProject.iml" />
       <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/BitcoinGateway.iml" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/BitcoinGateway.iml" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/out/production/BitcoinGateway/JavaCode/Test$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/out/production/BitcoinGateway/JavaCode/Test.class" afterPath="" />
       <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BlockchainConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BlockchainConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/BitcoinWallet.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/BitcoinWallet.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/CryptoWallet.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/CryptoWallet.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/CryptoWalletsDB.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/CryptoWalletsDB.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/DBConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/DBConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/EthereumWallet.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/EthereumWallet.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/gui/WalletsTable.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/gui/WalletsTable.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/gui/WithdrawRequests.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/gui/WithdrawRequests.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/ControlCenterConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/ControlCenterConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/NetworkUtils.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/NetworkUtils.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/PushServerConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/PushServerConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/WebServerConnector.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/network/WebServerConnector.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/tests/Test.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/tests/Test.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/tests/User.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/tests/User.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/utils/Constants.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/utils/Constants.java" />
-      <change beforePath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/utils/SystemParams.java" afterPath="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/utils/SystemParams.java" />
     </list>
     <ignored path="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BlockchainConnector.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,14 +52,14 @@
       <file leaf-file-name="BitcoinConnector.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="216" column="0" lean-forward="true" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
+            <state relative-caret-position="295">
+              <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1658#1659#0" expanded="true" />
-                <element signature="e#1692#1693#0" expanded="true" />
-                <element signature="e#9999#10000#0" expanded="true" />
-                <element signature="e#10026#10027#0" expanded="true" />
+                <element signature="e#1680#1681#0" expanded="true" />
+                <element signature="e#1714#1715#0" expanded="true" />
+                <element signature="e#10021#10022#0" expanded="true" />
+                <element signature="e#10048#10049#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,9 +111,9 @@
         <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/BitcoinWallet.java" />
         <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BlockchainConnector.java" />
         <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/tests/Test.java" />
-        <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java" />
         <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/data/DBConnector.java" />
         <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/utils/Constants.java" />
+        <option value="$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java" />
       </list>
     </option>
   </component>
@@ -384,6 +369,14 @@
       <option name="presentableId" value="Default" />
       <updated>1519561801005</updated>
     </task>
+    <task id="LOCAL-00001" summary="test">
+      <created>1519751627840</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1519751627840</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -400,7 +393,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17417061" sideWeight="0.49823144" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32969433" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24456796" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -409,7 +402,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2128821" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6310044" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -449,18 +442,22 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java</url>
-          <line>286</line>
+          <line>287</line>
           <properties />
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java</url>
-          <line>278</line>
+          <line>279</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
@@ -699,21 +696,21 @@
     <entry file="file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BlockchainConnector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../Sandbox/BitcoinGateway/src/JavaCode/blockchain/BitcoinConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="216" column="0" lean-forward="true" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
+        <state relative-caret-position="295">
+          <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1658#1659#0" expanded="true" />
-            <element signature="e#1692#1693#0" expanded="true" />
-            <element signature="e#9999#10000#0" expanded="true" />
-            <element signature="e#10026#10027#0" expanded="true" />
+            <element signature="e#1680#1681#0" expanded="true" />
+            <element signature="e#1714#1715#0" expanded="true" />
+            <element signature="e#10021#10022#0" expanded="true" />
+            <element signature="e#10048#10049#0" expanded="true" />
           </folding>
         </state>
       </provider>

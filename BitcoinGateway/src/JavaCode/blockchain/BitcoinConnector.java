@@ -33,6 +33,7 @@ public class BitcoinConnector implements BlockchainConnector{
     private static ArrayList<Wallet> walletsList;
     private static double totalBitCoinsFromAll=0;
 
+     private int x=0;
 
     public BitcoinConnector() {
 
