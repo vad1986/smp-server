@@ -1,4 +1,4 @@
-package JavaCode.blockchain;
+package JavaCode.data;
 
-public class EthereumWallet {
+public class EthereumWallet extends CryptoWallet{
 }

@@ -1,4 +1,4 @@
-package JavaCode.db;
+package JavaCode.data;
 
 import org.bitcoinj.wallet.Wallet;
 
@@ -6,6 +6,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DBConnector {
+
+    // Wallets
+    // system Params
+    // Withdraw Requests
+    // Deposit Requests
+    // Query Requests
+    // RetrieveAllCurrenciesTable
+
+
     private Connection connection;
 
     public DBConnector() {

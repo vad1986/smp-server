@@ -1,4 +1,7 @@
 package JavaCode.data;
 
-public class BitcoinWallet {
+import JavaCode.blockchain.BlockchainConnector;
+
+public class BitcoinWallet  {
+
 }

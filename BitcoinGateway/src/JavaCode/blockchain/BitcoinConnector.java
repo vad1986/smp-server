@@ -2,9 +2,14 @@ package JavaCode.blockchain;
 
 import com.google.common.base.Joiner;
 import org.bitcoinj.core.*;
+import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.store.BlockStore;
+import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.bitcoinj.wallet.listeners.WalletCoinsSentEventListener;
@@ -13,8 +18,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
-public class BitcoinWallet {
+public class BitcoinConnector implements BlockchainConnector{
 
     private static String[] fileNames=null;
 
@@ -28,7 +34,7 @@ public class BitcoinWallet {
     private static double totalBitCoinsFromAll=0;
 
 
-    public BitcoinWallet() {
+    public BitcoinConnector() {
 
         try {
             params = TestNet3Params.get();
@@ -51,71 +57,68 @@ public class BitcoinWallet {
 
 
     public  void  initialiseWalletAppKit(){
-        String filePrefix=null;
-        WalletAppKit kit;
-        Wallet wallet;
-        for(int i=0;i< fileNames.length;i++ ){
-            kit = new WalletAppKit(params, new File("C:\\Sandbox\\BitcoinGateway"), fileNames[i]);
-            wallet=new Wallet(params);
-            kit.startAsync();
-            kit.awaitRunning();
-            wallet=kit.wallet();
 
-            wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
-                @Override
-                public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+
-                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+
-                            "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+
-                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"+
-                            ">>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<>>>>>>>>"+
-                            "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"+
-                            coin.toFriendlyString());
-                    transaction.setMemo("Recieved");
-                    addNewAddress(wallet);
-
-
-                }
-
-
-            });
-
-
-            wallet.addCoinsSentEventListener(new WalletCoinsSentEventListener() {
-                @Override
-                public void onCoinsSent(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"+
-                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"+
-                            "COINS SEEEENT\n"+
-                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n"+
-                            ">>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<>>>>>>>>"+
-                            "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n"+
-                            coin.toFriendlyString());
-                    transaction.setMemo("Sent");
-                    addNewAddress(wallet);
-
-
-                }
-            });
-
-            File file = new File("C:\\Sandbox\\BitcoinGateway"+fileNames[i]+".wallet");
-
-
-            wallet.getBalance();
-            wallet.getPendingTransactions();
-            printWalletsInfo(wallet,fileNames[i]);
-
-//                if(i==2){
-//                sendFunds(kit,new Address(params,"mudZVu9SFMrBE5WS8cjiYCaVFPXdhrejV7"),Coin.parseCoin("0.02"));
+//        for(int i=0;i< fileNames.length;i++ ){
+//            kit = new WalletAppKit(params, new File("C:\\Sandbox\\BitcoinGateway"), fileNames[i]);
+//            wallet=new Wallet(params);
+//
+//            wallet=kit.wallet();
+//
+//            wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
+//                @Override
+//                public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
+//                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+
+//                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+
+//                            "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+
+//                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"+
+//                            ">>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<>>>>>>>>"+
+//                            "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"+
+//                            coin.toFriendlyString());
+//                    transaction.setMemo("Recieved");
+//                    addNewAddress(wallet);
+//
+//
+//                }
+//
+//
+//            });
+//
+//
+//            wallet.addCoinsSentEventListener(new WalletCoinsSentEventListener() {
+//                @Override
+//                public void onCoinsSent(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
+//                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"+
+//                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"+
+//                            "COINS SEEEENT\n"+
+//                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n"+
+//                            ">>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<>>>>>>>>"+
+//                            "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n"+
+//                            coin.toFriendlyString());
+//                    transaction.setMemo("Sent");
+//                    addNewAddress(wallet);
+//
+//
+//                }
+//            });
+//
+//            File file = new File("C:\\Sandbox\\BitcoinGateway"+fileNames[i]+".wallet");
+//
+//
+//            wallet.getBalance();
+//            wallet.getPendingTransactions();
+//            printWalletsInfo(wallet,fileNames[i]);
+//
+////                if(i==2){
+////                sendFunds(kit,new Address(params,"mudZVu9SFMrBE5WS8cjiYCaVFPXdhrejV7"),Coin.parseCoin("0.02"));
+////            }
+//            try{
+//                wallet.saveToFile(file);
+//
+//            }catch(Exception ex){
+//                ex.printStackTrace();
 //            }
-            try{
-                wallet.saveToFile(file);
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
-
-        }
+//
+//        }
 
 
 
@@ -257,4 +260,68 @@ public class BitcoinWallet {
     }
 
 
+    @Override
+    public Object connectToBlockchain() {
+
+        String seedCode = "juice artist similar gravity candy cart raw swap cave initial mountain roast";
+        long creationtime = 1519573021L;
+        Wallet wallet;
+        Address address;
+        DeterministicSeed seed = null;
+            String filePrefix = "testWallet";
+            WalletAppKit kit;
+            kit = new WalletAppKit(params, new File("C:\\Sandbox\\BitcoinGateway"), fileNames[1]);
+
+        try {
+            seed = new DeterministicSeed(seedCode,null,"",creationtime);
+            wallet = Wallet.fromSeed(params, seed);
+             address = wallet.currentReceiveAddress();
+            System.out.println("BALANCE >> "+getWalletBalance(wallet));
+
+        } catch (UnreadableWalletException e) {
+            e.printStackTrace();
+        }
+//            kit.restoreWalletFromSeed();
+        kit.startAsync();
+        kit.awaitRunning();
+        System.out.println("Seed words are: " + Joiner.on(" ").join(getWalletMnemonicCode(kit.wallet())));
+        System.out.println("Addr: " + kit.wallet().currentReceiveAddress());
+        System.out.println("BALANCE >> "+getWalletBalance(kit.wallet()));
+        System.out.println("Time >> "+(kit.wallet().getEarliestKeyCreationTime()));
+
+//        kit.wallet().
+//            BlockChain chain = kit.chain();
+//            BlockStore bs = chain.getBlockStore();
+//            Peer peer = kit.peerGroup().getDownloadPeer();
+//        Block b;
+
+        return kit;
+
+
+    }
+
+    @Override
+    public void disconnectFromBlockchain() {
+
+    }
+
+    @Override
+    public void createWallet() {
+
+    }
+
+    @Override
+    public void transferCoins() {
+
+    }
+
+    @Override
+    public String getBalance() {
+        return null;
+    }
+
+    @Override
+    public void addListeners() {
+
+    }
 }

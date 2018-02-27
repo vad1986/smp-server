@@ -1,4 +1,4 @@
-package JavaCode;
+package JavaCode.tests;
 
 public class User {
     private int userId;

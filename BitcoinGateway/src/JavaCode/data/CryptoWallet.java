@@ -1,6 +1,4 @@
-package JavaCode.blockchain;
-
-import JavaCode.User;
+package JavaCode.data;
 
 public class CryptoWallet {
     private int WalletType;

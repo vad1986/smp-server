@@ -1,4 +1,4 @@
-package JavaCode.data;
+package JavaCode.utils;
 
 public class SystemParams {
 }

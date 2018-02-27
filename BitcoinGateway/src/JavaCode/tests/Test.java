@@ -1,4 +1,4 @@
-package JavaCode;
+package JavaCode.tests;
 import JavaCode.blockchain.BitcoinConnector;
 
 
@@ -11,7 +11,7 @@ public class Test {
 
     public static void main(String[] args) throws Exception  {
         BitcoinConnector bitCoinWallet=new BitcoinConnector();
-
+        bitCoinWallet.connectToBlockchain();
 
     }
 
