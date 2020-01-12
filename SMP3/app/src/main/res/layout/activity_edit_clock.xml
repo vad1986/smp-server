@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditClockActivity">
+
+    <include layout="@layout/toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="160sp"
+            android:layout_marginBottom="10sp"
+            android:text="Choose User"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/userNameEditHours_Spinner"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130sp" />
+
+        <ListView
+            android:id="@+id/editHours_listView"
+            android:layout_width="wrap_content"
+            android:layout_height="273dp"
+            android:layout_above="@+id/getShiftUserById_Button"
+            android:layout_below="@+id/userNameEditHours_Spinner"
+            android:paddingLeft="5sp"
+            android:paddingEnd="5sp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/getShiftUserById_Button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50sp"
+        android:background="@drawable/button_secondary"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="List Shifts"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/sendNewDay_Buttom"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5sp"
+        android:background="@drawable/button_main"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Set New Shift"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+
+
+</LinearLayout>

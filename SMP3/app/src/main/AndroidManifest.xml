@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.arkadiy.enter.smp3">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".activities.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.loadingActivity"></activity>
+        <activity
+            android:name=".saved"
+            android:label="@string/title_activity_saved"
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".activities.EditAlertActivity" />
+        <activity android:name=".activities.EditUserAttendancy" />
+        <activity android:name=".activities.EditClockActivity" />
+        <activity android:name=".activities.TasksReportActivity" />
+        <activity android:name=".activities.ManagerActivity" />
+        <activity android:name=".activities.SavedActivity" />
+        <activity android:name=".activities.BuildDepartmentActivity" />
+        <activity android:name=".activities.SelecedEditUserActivity" />
+        <activity android:name=".activities.EditUsersActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".activities.TestToolbarActivity"
+            android:exported="true" />
+        <activity android:name=".activities.CommuicationActivity" />
+        <activity android:name=".activities.CreateAlertActivity" />
+        <activity android:name=".activities.GPSActivity" />
+        <activity android:name=".activities.AdminActivity" />
+        <activity android:name=".activities.LogInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.AddNewUserActivity" />
+        <activity android:name=".activities.SigningAClockActivity" />
+        <activity android:name=".activities.TasksActivity" />
+        <activity android:name=".activities.AddNewTaskActivity" />
+        <activity
+            android:name=".WelcomePage"
+            android:label="@string/title_activity_welcome_page"
+            android:theme="@style/AppTheme" />
+    </application>
+
+</manifest>

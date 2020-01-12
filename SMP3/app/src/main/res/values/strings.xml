@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SMP</string>
+    <string name="Set_departments">Set departments</string>
+    <string name="title_activity_forgot_password">forgotPassword</string>
+    <string name="empty_list">No Tasks yet!</string>
+    <string name="textview">TextView</string>
+    <color name="bluish">#19273B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whiteDark">#E7F1F1</color>
+
+    <string name="toolbarTitle"></string>
+
+    <color name="black">#000000</color>
+    <string name="title_activity_welcome_page">WelcomePage</string>
+    <string name="title_activity_saved">saved</string>
+
+
+</resources>

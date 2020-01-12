@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:maxLines="1"
+
+            android:layout_marginLeft="120sp"
+            android:id="@+id/alertName_textView"
+            android:layout_width="150sp"
+            android:layout_height="50sp"
+            android:layout_marginStart="10dp"
+            android:textSize="20sp" />
+
+
+        <ImageView
+            android:id="@+id/imageCustom"
+            android:layout_marginLeft="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:src="@drawable/alert_small" />
+
+
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/alertDescription_textView"-->
+<!--        android:layout_width="253dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="35dp"-->
+<!--        android:text="Status" />-->
+</LinearLayout>

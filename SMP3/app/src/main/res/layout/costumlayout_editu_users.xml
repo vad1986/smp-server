@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:paddingBottom="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_marginRight="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:paddingTop="25sp"
+            android:src="@drawable/ic_user" />
+
+        <TextView
+            android:paddingTop="10sp"
+            android:id="@+id/userName_TextView"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/amiri_bold_italic"
+            android:text="Vadim Hasmenik"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_marginLeft="30sp"
+            android:textColor="@color/primery"
+            android:id="@+id/user_department_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/boogaloo"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

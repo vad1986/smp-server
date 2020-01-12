@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddNewTaskActivity"
+
+    >
+
+
+    <include layout="@layout/toolbar" />
+
+
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="100dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:paddingLeft="10dp"
+            android:text="Task Name"
+            android:textColor="@color/black">
+
+        </TextView>
+
+
+        <EditText
+            android:id="@+id/nameTask_EditText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="30dp"
+            android:defaultFocusHighlightEnabled="true"
+            android:drawableRight="@drawable/ic_edit_pen"
+            android:gravity="center_horizontal"
+
+
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="150dp"
+            android:text="Assign"
+            android:textColor="@color/black">
+
+        </TextView>
+
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Spinner
+                android:id="@+id/departmants_Spinner"
+                android:layout_width="200dp"
+                android:layout_height="38dp"></Spinner>
+
+
+            <Switch
+                android:id="@+id/switchUsers"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/map"
+                android:checked="true"
+                android:text="Personal"
+                android:textOff="OFF"
+                android:textOn="ON"
+                android:textSize="20dp" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+        <Spinner
+            android:id="@+id/workers_Spinner"
+            android:layout_width="200dp"
+            android:layout_height="38dp"
+            android:layout_marginRight="30dp"
+            >
+
+        </Spinner>
+        <View
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="70dp"
+                android:text="From Date"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="To Date"
+                android:textColor="@color/black"
+                android:paddingLeft="100dp"
+
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30sp"
+            android:orientation="horizontal"
+            android:paddingBottom="50dp">
+
+            <EditText
+                android:id="@+id/editStartDate_EditText"
+                android:layout_width="145sp"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:hint="DD-MM-YYYY"
+                android:inputType="date" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_arrow_forward" />
+
+
+            <EditText
+                android:id="@+id/editEnd_EditText"
+                android:layout_width="145sp"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:hint="DD-MM-YYYY"
+                android:inputType="date" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="145dp"
+            android:text="Description"
+            android:textColor="@color/black">
+
+        </TextView>
+
+
+
+        <EditText
+            android:id="@+id/taskDecription_EditText"
+            android:layout_width="match_parent"
+            android:layout_height="163dp"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:background="@drawable/border_style"
+            />
+
+
+        <Button
+            android:id="@+id/creatNewTask_button"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/button_main"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="SUBMIT"
+            android:textColor="@color/white"
+
+            android:textSize="30sp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

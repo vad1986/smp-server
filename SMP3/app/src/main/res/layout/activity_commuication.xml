@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.CommuicationActivity">
+    <include layout="@layout/toolbar" />
+
+
+    <TextView
+        android:id="@+id/personalInformation_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/personalInformation_ScrollView"
+        android:fontFamily="@font/bangers"
+        android:paddingLeft="150sp"
+        android:text="Online Users"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/onlineUsers_Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="0dp">
+
+    </Spinner>
+
+    <TextView
+        android:id="@+id/alerts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bangers"
+        android:paddingLeft="150sp"
+        android:text="Choose Alert"
+        android:textSize="18dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/darker_gray" />
+
+    <ListView
+        android:id="@+id/alert_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        android:layout_below="@+id/onlineUsers_Spinner"
+        android:layout_alignParentBottom="true">
+
+    </ListView>
+
+
+</LinearLayout>

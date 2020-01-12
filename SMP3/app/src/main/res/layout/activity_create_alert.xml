@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CreateAlertActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/name_new_alertEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:hint="Please enter name for new Alert"
+            android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/description_alertEditText"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/name_new_alertEditText"
+            android:hint="Please enter description for new Alert"
+            android:inputType="textPersonName"
+            android:background="@drawable/border_style"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/send_new_alertButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="170sp"
+        android:background="@drawable/button_main"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Save"
+        android:layout_marginLeft="55sp"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+</LinearLayout>

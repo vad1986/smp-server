@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    >
+
+
+    <TextView
+        android:id="@+id/taskName_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:paddingLeft="25dp"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <EditText
+        android:id="@+id/commentTask_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/border_style"/>
+
+
+</RelativeLayout>

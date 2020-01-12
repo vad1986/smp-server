@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.BuildDepartmentActivity">
+
+    <include layout="@layout/toolbar" />
+
+
+    <ListView
+        android:id="@+id/department_listView"
+        android:layout_width="match_parent"
+        android:layout_height="350sp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/add_new_name_department"/>
+
+    <EditText
+        android:id="@+id/add_new_name_department"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="Add new Name For Department"
+        android:layout_above="@+id/departments_manager_spinner"/>
+
+    <Spinner
+        android:id="@+id/departments_manager_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/status_department"
+        />
+
+    <Switch
+        android:id="@+id/status_department"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/send_new_department"
+        android:textOn="Departmant status Active"
+        android:textOff="Department status Non Active"/>
+
+
+
+    <Button
+        android:id="@+id/send_new_department"
+        android:layout_width="300sp"
+        android:layout_height="50sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5sp"
+        android:background="@drawable/button_main"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Save"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+
+</LinearLayout>

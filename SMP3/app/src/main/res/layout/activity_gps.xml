@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activities.GPSActivity">
+
+    <include layout="@layout/toolbar" />
+
+
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/map"
+        tools:context=".activities.GPSActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" >
+
+    </fragment>
+
+    <Switch
+        android:id="@+id/switchGPS"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map"
+        android:layout_marginStart="3dp"
+        android:checked="true"
+        android:text="Using GPS"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="30dp" />
+
+    <!--  API_MAP = AIzaSyDBmbLrBb_hFi88_yJCm_-jPcuKp9rQ90c  -->
+
+    <!--<TextView-->
+        <!--android:id="@+id/new_Location_TextView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/radiusSize_EditText"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="-1dp"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:hint="New Location"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="15dp" />-->
+
+    <LinearLayout
+        android:layout_gravity="center_vertical|center_horizontal"
+
+        android:textAlignment="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/get_New_Location_Btn"
+            android:layout_width="200sp"
+            android:layout_height="30sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/button_secondary"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Get Location"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+    <EditText
+        android:id="@+id/radiusSize_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switchGPS"
+        android:ems="10"
+        android:hint="Please enter a radius in meters"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="20dp"
+            android:text="Attempts Number"
+            android:id="@+id/testAttempts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/attemptsSpinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/get_New_Location_Btn"
+            android:layout_alignStart="@+id/switchGPS" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_weight="1"
+        android:minHeight="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/button_cansel"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:id="@+id/send_new_location_Btn"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:text="Save"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="5sp"
+
+            android:background="@drawable/button_save"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>

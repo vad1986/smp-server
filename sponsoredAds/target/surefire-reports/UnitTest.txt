@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: UnitTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.575 s <<< FAILURE! - in UnitTest
+getProduct  Time elapsed: 0.023 s  <<< ERROR!
+java.lang.NullPointerException
+	at UnitTest.getProduct(UnitTest.java:43)
+

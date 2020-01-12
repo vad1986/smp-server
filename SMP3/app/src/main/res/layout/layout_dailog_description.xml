@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/taskName_DSC_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/startTimeDSC_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/taskName_DSC_TextView" />
+
+    <TextView
+        android:id="@+id/endTimeDSC_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/startTimeDSC_TextView" />
+
+
+    <TextView
+        android:id="@+id/descriptionTask_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/border_style"
+        android:padding="15dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/endTimeDSC_TextView"
+        tools:ignore="MissingConstraints"
+        />
+
+</RelativeLayout>

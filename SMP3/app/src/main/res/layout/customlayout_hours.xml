@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/day_TextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="day" />
+
+    <TextView
+        android:id="@+id/startTime_TextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingStart="20dp"
+        android:layout_weight="1"
+        android:text="00:00" />
+
+    <TextView
+        android:id="@+id/endTime_TextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingStart="20dp"
+        android:layout_weight="1"
+        android:text="00:00" />
+
+    <TextView
+        android:id="@+id/sumTime_TextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingStart="20dp"
+        android:layout_weight="1"
+        android:text="00:00" />
+</LinearLayout>

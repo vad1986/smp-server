@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddNewUserActivity">
+
+    <include layout="@layout/toolbar" />
+
+
+    <TextView
+        android:id="@+id/personalInformation_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/personalInformation_ScrollView"
+        android:fontFamily="@font/bangers"
+        android:paddingLeft="25dp"
+        android:text="Personal information"
+        android:textSize="18dp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/personalInformation_ScrollView"
+        android:layout_marginBottom="1sp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/border_style">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/addNewUserFirstName_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="First name" />
+
+            <EditText
+                android:id="@+id/addNewUserSecondName_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Second Name" />
+
+
+            <EditText
+                android:id="@+id/addNewUserCity_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="City"
+                />
+
+            <EditText
+                android:id="@+id/addNewUSerStreet_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Street" />
+
+            <EditText
+                android:id="@+id/addNewUSerHouseNumber_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="House number" />
+
+            <EditText
+                android:id="@+id/addNewUserDoorNumber_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Door number" />
+
+            <EditText
+                android:id="@+id/addNewUserTelephone_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:hint="Telephone"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/addNewUserEmail_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Email" />
+
+
+
+        </LinearLayout>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RadioGroup
+        android:id="@+id/sex_RadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/addNewUser_Button"
+        android:background="@drawable/border_style"
+
+        >
+
+        <RadioButton
+            android:id="@+id/male_RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@android:dimen/app_icon_size"
+            android:text="Male"
+            />
+
+        <RadioButton
+            android:id="@+id/female_RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@android:dimen/app_icon_size"
+            android:text="Female"
+
+            />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/addrresOfUser_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bangers"
+        android:paddingLeft="25dp"
+        android:text="Proffessional Info"
+        android:textSize="18dp" />
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/addrresOfUser_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_above="@+id/sex_RadioGroup"
+        android:background="@drawable/border_style">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/addNewUserName_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="User name" />
+
+            <EditText
+                android:id="@+id/addNewUserPassword_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Password" />
+
+
+            <Spinner
+                android:id="@+id/addNewUserRole_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Role" />
+
+            <Spinner
+                android:id="@+id/addNewUserManager_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Manager" />
+
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+
+    <Button
+        android:id="@+id/addNewUser_Button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8sp"
+        android:background="@drawable/button_main"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Save"
+        android:layout_marginLeft="55sp"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+
+</LinearLayout>

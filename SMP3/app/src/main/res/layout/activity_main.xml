@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/weird"
+    android:orientation="vertical"
+    tools:context=".activities.MainActivity">
+
+
+    <include layout="@layout/toolbar" />
+
+
+
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/toolbarMine"-->
+<!--        app:logo="@drawable/ic_menu"-->
+<!--        android:background="@color/primery"-->
+<!--        app:title="@string/toolbarTitle"-->
+<!--        app:titleTextColor="@color/white"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="hello"-->
+<!--            >-->
+
+<!--        </TextView>-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+
+
+    <TableLayout
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/tableButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:paddingBottom="20dp">
+
+            <Button
+                android:id="@+id/tasks_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonshape"
+                android:drawableTop="@drawable/ic_task"
+                android:paddingTop="20dp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="7"
+                android:text="Tasks"
+                android:textColor="#4655b6"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/signingAClock_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="0dp"
+                android:layout_weight="1"
+
+
+                android:background="@drawable/buttonshape"
+                android:drawableTop="@drawable/finger_print_1"
+                android:paddingTop="20dp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="7"
+                android:text="Punch Clock"
+                android:textColor="@color/primery"
+                android:textSize="18sp" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/communication_Button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+
+                android:layout_weight="1"
+                android:background="@drawable/buttonshape"
+                android:drawableTop="@drawable/ic_promotion"
+                android:elevation="0dp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="ALERTS"
+                android:textColor="#4655b6"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/admin_options"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+
+                android:layout_weight="1"
+                android:background="@drawable/buttonshape"
+                android:drawableTop="@drawable/ic_admin_with_cogwheels"
+                android:elevation="0dp"
+                android:padding="20dp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Admin options"
+                android:textColor="#4655b6"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+
+            <Button
+                android:id="@+id/manager_options"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+
+
+                android:layout_weight="1"
+                android:background="@drawable/buttonshape"
+                android:drawableTop="@drawable/ic_business"
+                android:elevation="0dp"
+                android:padding="10dp"
+                android:paddingStart="0dp"
+                android:paddingTop="0dp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Manager"
+                android:textColor="#4655b6"
+                android:textSize="18sp"
+                android:visibility="visible" />
+        </TableRow>
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+            <!--           <Button
+                            android:id="@+id/addNewTask_Button"
+                            android:layout_width="150dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="1"
+                            android:text="Add new task" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/exit_Button"-->
+<!--                android:layout_width="130dp"-->
+<!--                android:layout_height="120dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/buttonshape"-->
+
+<!--                android:drawableTop="@drawable/ic_exit"-->
+<!--                android:elevation="0dp"-->
+
+<!--                android:padding="20dp"-->
+<!--                android:shadowColor="#A8A8A8"-->
+<!--                android:shadowDx="0"-->
+<!--                android:shadowDy="0"-->
+<!--                android:shadowRadius="5"-->
+<!--                android:text="exit"-->
+<!--                android:textColor="#4655b6"-->
+<!--                android:textSize="18sp"-->
+<!--                android:visibility="visible" />-->
+<!--        </TableRow>-->
+
+
+    </TableLayout>
+
+
+</LinearLayout>
