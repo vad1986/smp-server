@@ -221,10 +221,10 @@ public class UserServices {
             try {
                 JsonObject jsonObject = routingContext.getBodyAsJson();
                 int userId = Integer.parseInt(routingContext.request().getHeader("user_id"));
-                int inOut = jsonObject.getInteger("in_out").intValue();
+                int inOut = jsonObject.getInteger("in_out");
                 String time = jsonObject.getString("date_time");
-                int gpsOn = jsonObject.getInteger("gps").intValue();
-                if (UpConfig.GPS.intValue() == 0 || gpsOn == 0) {
+                int gpsOn = jsonObject.getInteger("gps");
+                if (UpConfig.GPS == 0 || gpsOn == 0) {
                     punchClockAttempt(routingContext, userId, inOut, time, -1.0F, -1);
                 } else {
                     double loc = ManagerServices.isGpsLocationInRange(routingContext);
@@ -232,25 +232,25 @@ public class UserServices {
                     if (loc != 0.0D) {
                         distance = (float)Math.round(loc - UpConfig.MAIN_RADIUS);
                         HashMap<String, Object> send = new HashMap<>();
-                        send.put("meters", Float.valueOf(distance));
-                        send.put("user_id", Integer.valueOf(userId));
+                        send.put("meters", distance);
+                        send.put("user_id", userId);
                         switch (increasePunchClockAttemptForUser(userId)) {
                             case 0:
-                                send.put("attempts", userPunchClockAttempts.get(Integer.valueOf(userId)));
+                                send.put("attempts", userPunchClockAttempts.get(userId));
                                 send.put("message", "Try again inside the range please");
                                 MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.PUNCH_CLOCK_FAULT, send, logger);
                                 return;
                             case 1:
                                 send.put("message", "You have one more attempt to punch clock!!");
-                                send.put("attempts", userPunchClockAttempts.get(Integer.valueOf(userId)));
+                                send.put("attempts", userPunchClockAttempts.get(userId));
                                 MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.PUNCH_CLOCK_FAULT, send, logger);
                                 break;
                             case -1:
                                 send.put("message", "Contact your manager,he/she was alerted of this behaviour.");
                                 MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.PUNCH_CLOCK_FAULT, send, logger);
-                                if (((Integer)userPunchClockAttempts.get(Integer.valueOf(userId))).intValue() == UpConfig.MAIN_NUMBER_ATTEMPTS)
+                                if ((Integer) userPunchClockAttempts.get(userId) == UpConfig.MAIN_NUMBER_ATTEMPTS)
                                     ManagerServices.getManagerInfoAndSendMail(userId);
-                                userPunchClockAttempts.put(Integer.valueOf(userId), Integer.valueOf(UpConfig.MAIN_NUMBER_ATTEMPTS + 1));
+                                userPunchClockAttempts.put(userId, UpConfig.MAIN_NUMBER_ATTEMPTS + 1);
                                 return;
                         }
                     } else {
@@ -272,8 +272,10 @@ public class UserServices {
         JsonArray out = new JsonArray();
         Function<JsonObject, Void> afterDb = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM && result.getJsonArray("data").getInteger(6).intValue() == 0) {
-                    MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.PUNCH_CLOCK, "Punched clock" + userId + " In_out= " + inOut, logger);
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM && result.getJsonArray("data").getInteger(7) == 0) {
+                    int id=result.getJsonArray("data").getInteger(6);
+                    JsonObject jsonObject=new JsonObject().put("id",id);
+                    MessageLog.sendMessageObject(routingContext,MessageConfig.MessageKey.PUNCH_CLOCK,jsonObject,logger);
                 } else {
                     MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.PUNCH_CLOCK_ERROR, "Failed to punch clock for user" + userId + " In_out= " + inOut, logger);
                 }
@@ -282,8 +284,8 @@ public class UserServices {
 
         };
 
-        in.add(Integer.valueOf(userId)).add(time).add(Integer.valueOf(inOut)).add(Boolean.valueOf(true)).add(Float.valueOf(distance)).add(Integer.valueOf(id)).addNull().addNull();
-        out.addNull().addNull().addNull().addNull().addNull().addNull().add(JDBCType.INTEGER).add(JDBCType.VARCHAR);
+        in.add(userId).add(time).add(inOut).add(Boolean.TRUE).add(distance).add(id).addNull().addNull().addNull();
+        out.addNull().addNull().addNull().addNull().addNull().addNull().add(JDBCType.INTEGER).add(JDBCType.INTEGER).add(JDBCType.VARCHAR);
         dbLayer.callProcedure(afterDb, SqlQueries.PUNCH_CLOCK, in, out, "docs");
     }
 
@@ -548,7 +550,7 @@ public class UserServices {
         LocalDate monthEnd = LocalDate.now().plusMonths(1L).withDayOfMonth(1).minusDays(1L);
 
         Function after = result -> {
-            if (((JsonObject)result).getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+            if (((JsonObject) result).getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                 JsonObject object = null;
                 try {
                     object = ObjectMapperUtils.sortUserAttendance(((JsonObject)result).getJsonArray("data"), userId, null);

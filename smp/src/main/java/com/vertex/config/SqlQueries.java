@@ -21,7 +21,7 @@ public class SqlQueries {
 
     public static final String ADD_SHOP_LOCATION = "call sys.add_shop_location(?,?,?,?,?)";
 
-    public static String PUNCH_CLOCK = "call sys.punch_clock(?,?,?,?,?,?,?,?);";
+    public static String PUNCH_CLOCK = "call sys.punch_clock(?,?,?,?,?,?,?,?,?);";
 
     public static String ADMIN_CREATE_ALERT = "call sys.create_alert(?,?,?,?,?,?,?);";
 

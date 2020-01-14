@@ -337,7 +337,7 @@ public class ManagerServices {
     public static void getManagerInfoAndSendMail(final int userId) {
         Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                     JsonObject manager = result.getJsonObject("data");
                     if (manager != null)
                         try {

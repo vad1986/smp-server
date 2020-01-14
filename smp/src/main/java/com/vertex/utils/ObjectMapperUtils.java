@@ -90,11 +90,11 @@ public class ObjectMapperUtils {
         String finalTime = null;
         for (int i = 0; i < punchClocks.size(); i++) {
             JsonObject shift = new JsonObject();
-            if (punchClocks.getJsonObject(i).getInteger("in_out").intValue() == 1) {
+            if (punchClocks.getJsonObject(i).getInteger("in_out") == 1) {
                 String in = LangUtils.getDateString(punchClocks.getJsonObject(i).getString("date_time"));
                 shift.put("start", in);
                 shift.put("start_id", punchClocks.getJsonObject(i).getInteger("id"));
-                if (i < punchClocks.size() - 1 && punchClocks.getJsonObject(i + 1).getInteger("in_out").intValue() == 2) {
+                if (i < punchClocks.size() - 1 && punchClocks.getJsonObject(i + 1).getInteger("in_out") == 2) {
                     String out = LangUtils.getDateString(punchClocks.getJsonObject(i + 1).getString("date_time"));
                     shift.put("finish", out);
                     shift.put("finish_id", punchClocks.getJsonObject(i + 1).getInteger("id"));
@@ -120,6 +120,6 @@ public class ObjectMapperUtils {
             finalTime = LangUtils.convertTime(sum);
         if (user != null)
             return user.put("data", array).put("sum", finalTime);
-        return (new JsonObject()).put("user_id", Integer.valueOf(userId)).put("data", array).put("sum", finalTime);
+        return (new JsonObject()).put("user_id", userId).put("data", array).put("sum", finalTime);
     }
 }

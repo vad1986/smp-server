@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import com.arkadiy.enter.smp3.config.ResponseCode;
 import com.arkadiy.enter.smp3.dataObjects.CustomAdapterHours;
 import com.arkadiy.enter.smp3.dataObjects.DayWork;
 import com.arkadiy.enter.smp3.dataObjects.IHandler;
+import com.arkadiy.enter.smp3.dataObjects.Task;
 import com.arkadiy.enter.smp3.dataObjects.User;
 import com.arkadiy.enter.smp3.services.GlobalServices;
 import com.arkadiy.enter.smp3.services.GpsChecker;
@@ -36,16 +38,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -75,9 +84,11 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
     private ListView weekWork;
     private CustomAdapterHours customAdapterHours;
     private GoogleMap mMap;
-
-
-
+    private static String pattern="yyyy-MM-dd HH:mm:ss";
+    private static String patternDate="yyyy-MM-dd";
+    public static final String TIME_SERVER = "time-a.nist.gov";
+    public static IHandler timeHandler;
+    public static long TWO_HOURS=7_200_000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,25 +136,68 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
                 in_out = Constants.SET_IN_OCLOCK;
 
                 checkLocation();
-                enterTime = getTime();
-                //day = getDay();
-                sendToServer(enterTime, in_out,enterDataTextView);
-                setLocationOnMap();
+                try {
+                    getRealTimeDate(handler->{
+
+                        SigningAClockActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                    enterTime = handler.getData().getString("time");
+                                    endTime = "";
+                                    exitDataTextView.setText(endTime);
+
+                                    //day = getDay();
+                                    sendToServer(enterTime, in_out,enterDataTextView);
+                                    setLocationOnMap();
+
+                            }
+                        });
+
+
+
+                        return true;
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
 
             }
         });
+
+
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                in_out = Constants.SET_OUT_OCLOCK;
-                checkLocation();
-                endTime = getTime();
-                sendToServer(endTime,in_out,exitDataTextView);
+
+                try {
+                    getRealTimeDate(handler->{
+
+                        SigningAClockActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                endTime = handler.getData().getString("time");
+                                in_out = Constants.SET_OUT_OCLOCK;
+                                checkLocation();
+                                sendToServer(endTime,in_out,exitDataTextView);
 
 
 
-                setLocationOnMap();
+                                setLocationOnMap();
+
+                            }
+                        });
+
+
+
+                        return true;
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         App.setContext(this);
@@ -213,9 +267,7 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
 
                 // sumTime =  jsonResponse.getJSONArray("data").getJSONObject(i).getString("hours");
 //        sumTime = String.valueOf(diff);
-                dayWork = new DayWork(getDay(dateDay),date1,date2,sumTime,startId,endId);
-                listWork.add(dayWork);
-                customAdapterHours.notifyDataSetChanged();
+                addDayToList(dateDay,date1,date2,startId,endId);
                 dateDay =  null;
 
             }
@@ -226,6 +278,85 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
         }
     }
 
+
+    public static void getRealTimeDate(IHandler timeHandler) throws Exception{
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                NTPUDPClient timeClient = new NTPUDPClient();
+                InetAddress inetAddress = null;
+                try {
+                    inetAddress = InetAddress.getByName(TIME_SERVER);
+                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
+                    long returnTime = timeInfo.getReturnTime();
+                    returnTime+=TWO_HOURS;
+                    Date time = new Date(returnTime);
+
+                    SimpleDateFormat df = new SimpleDateFormat(pattern);
+                    String StringDate = df.format(time);
+
+                    Message msg=new Message();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("time",StringDate);
+                    msg.setData(bundle);
+                    timeHandler.sendMessage(msg);
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+    }
+
+
+    private void addDayToList(java.util.Date dateDay,String date1,String date2,long startId,long endId){
+        dayWork = new DayWork(getDay(dateDay),date1,date2,sumTime,startId,endId);
+        listWork.add(dayWork);
+        customAdapterHours.notifyDataSetChanged();
+
+    }
+
+    private void addDayToListByIdAndWay(java.util.Date dateNew,String dateString,long id,int way){
+
+        if(way==1){
+            dayWork = new DayWork(getDay(dateNew),dateString,"--","0.0",id,-100);
+            listWork.add(dayWork);
+        }else{
+            DayWork work =  listWork.get(listWork.size()-1);
+                Date dateOld= stringToDate(work.getStart(),patternDate);
+                if(dateOld.compareTo(dateNew)==0){
+                    work.setEnd(dateString);
+                    work.setEndId(id);
+                    String sum=calculateDifference(work.getStart(),dateString);
+                    work.setSum(sum);
+
+            }
+        }
+
+
+        customAdapterHours.notifyDataSetChanged();
+
+    }
+
+    private String calculateDifference(String start, String end) {
+        Date dateStart= stringToDate(start,pattern);
+        Date dateEnd= stringToDate(end,pattern);
+
+        long diffInMilli=dateEnd.getTime()-dateStart.getTime();
+
+         long hours = TimeUnit.MILLISECONDS.toHours(diffInMilli);
+
+         long minutes = (TimeUnit.MILLISECONDS.toMinutes(diffInMilli)
+                - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(diffInMilli)));
+
+         return hours+"."+minutes;
+
+    }
 
     public void sendToServer(String time, int in_out,TextView textView) {
 
@@ -244,6 +375,7 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
                     Bundle bundle = iHandler.getData();
 
                         json =new JSONObject(bundle.getString("json"));
+                        long id=json.getLong("id");
 
 
 
@@ -252,6 +384,8 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
                       } else if (iHandler.getData().getInt(ConstantsJson.RESPONSE_CODE) == ResponseCode.PUNCH_CLOCK) {
                          Toast.makeText(App.getContext(),"Clock stamping was successful ",Toast.LENGTH_LONG).show();
                            textView.setText(time);
+                        Date date= stringToDate(time,patternDate);
+                         addDayToListByIdAndWay(date,time,id,in_out);
 
                             //chengVisibility(time);
                       }else {
@@ -272,10 +406,21 @@ public class SigningAClockActivity extends AppCompatActivity implements Activity
     }
 
     public String getTime() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
         String StringDate = df.format(Calendar.getInstance().getTime());
         return StringDate;
     }
+
+    private Date stringToDate(String aDate,String aFormat) {
+
+        if(aDate==null) return null;
+        ParsePosition pos = new ParsePosition(0);
+        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
+        Date stringDate = simpledateformat.parse(aDate, pos);
+        return stringDate;
+
+    }
+
     public int getDay(Date day){
         Calendar c = Calendar.getInstance();
         c.setTime(day);
