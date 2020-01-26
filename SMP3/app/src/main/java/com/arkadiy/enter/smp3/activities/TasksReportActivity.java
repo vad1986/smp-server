@@ -168,8 +168,8 @@ public class TasksReportActivity extends AppCompatActivity {
             jsonObject.put("to_date_time",toDateTime);
             jsonObject.put("group",groupId);
             jsonObject.put("id",userId);
-//            jsonObject.put("mail", User.getMyEmail());
-            jsonObject.put("mail", "enterz.ae@gmail.com");
+            jsonObject.put("mail", User.getMyEmail());
+//            jsonObject.put("mail", "enterz.ae@gmail.com");
             Manager.getReport(requestQueue,jsonObject);
 
 

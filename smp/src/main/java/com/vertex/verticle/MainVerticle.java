@@ -10,7 +10,6 @@ import com.vertex.services.ChatServices;
 import com.vertex.services.ManagerServices;
 import com.vertex.services.UserServices;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Verticle;
@@ -29,8 +28,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public class MainVerticle extends AbstractVerticle {
@@ -40,22 +37,20 @@ public class MainVerticle extends AbstractVerticle {
 
     protected ManagerServices managerServices;
 
-    private SQLClient mySQLClient;
-
     protected DbLayer dbLayer;
 
     protected ChatServices chatServices;
 
     public void start(Future<Void> startFuture) throws Exception {
         super.start(startFuture);
-        this.mySQLClient = (SQLClient)JDBCClient.createShared(this.vertx, DbConfig.localDbConfig);
         this.dbLayer = new DbLayer(this.vertx);
         Router router = Router.router(this.vertx);
-        router.route().handler((Handler)BodyHandler.create().setMergeFormAttributes(true));
+        router.route().handler(BodyHandler.create().setMergeFormAttributes(true));
         HttpServer server = this.vertx.createHttpServer();
-        server.requestHandler((Handler)router).listen(UpConfig.PORT);
-        this.logger.info("Vertix Started on port " + UpConfig.PORT);
-        router.route().handler((Handler)BodyHandler.create());
+        server.requestHandler(router).listen(UpConfig.PORT);
+
+        this.logger.info("Vertx Started on port " + UpConfig.PORT);
+        router.route().handler(BodyHandler.create());
         Set<HttpMethod> allowedMethods = new HashSet<>();
         allowedMethods.add(HttpMethod.GET);
         allowedMethods.add(HttpMethod.POST);
@@ -67,11 +62,10 @@ public class MainVerticle extends AbstractVerticle {
         allowdHeaders.add("manager_id");
         allowdHeaders.add("access-control-allow-origin");
         allowdHeaders.add("Content-Type");
-        router.route().handler((Handler)CorsHandler.create("*")
+        router.route().handler((Handler<RoutingContext>)CorsHandler.create("*")
                 .allowedMethods(allowedMethods)
-                .allowedHeaders(allowdHeaders)
-                .allowedHeader("Content-Type"));
-        router.route().handler((Handler)BodyHandler.create());
+                .allowedHeaders(allowdHeaders));
+        router.route().handler((Handler<RoutingContext>)BodyHandler.create());
         init(this.vertx, router);
     }
 
@@ -102,7 +96,7 @@ public class MainVerticle extends AbstractVerticle {
         router.get(UriRoles.MANAGER + "/get_open_tasks").handler(this.managerServices::getOpenTasks);
         router.get(UriRoles.LOGIN + "/get_my_users").handler(this.managerServices::getMyUsers);
         router.get(UriRoles.LOGIN + "/get_user_tasks/:status").handler(this.userServices::getUserTasks);
-        router.get(UriRoles.LOGIN + "/messages").handler(this.userServices::getUserMessages);
+        router.get( "/messages").handler(this.userServices::getUserMessages);//UriRoles.LOGIN +
         router.get(UriRoles.LOGIN + "/config").handler(this.userServices::getUserChatConfig);
         router.get("/checkPrivate/:key/:user_id").handler(this.userServices::checkPrivateKey);
         router.get("/onlineUsers").handler(this.chatServices::getOnlineUsers);

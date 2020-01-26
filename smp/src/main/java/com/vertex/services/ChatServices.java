@@ -170,6 +170,14 @@ public class ChatServices {
                 DeliveryOptions options = new DeliveryOptions();
                 options.setSendTimeout(10000L);
 //                eventBus.send("online", null, options, ());
+                this.eventBus.send("online", null, res -> {
+                    if (res.succeeded()) {
+                        MessageLog.sendMessageObject(routingContext, MessageConfig.MessageKey.SOCKET_MESSAGE_SEND,
+                                new JsonObject().put("online",res.result().body()), logger);
+                    } else {
+                        MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.MESSAGE_ERROR, "Failed to send message to communication server. Response came back false", logger);
+                    }
+                });
             } catch (Exception e) {
                 MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.ONLINE_USERS_ERROR, "Failed getting online users,due to the following Exception" + e.getMessage(), logger);
             } finally {

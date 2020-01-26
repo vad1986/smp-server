@@ -17,6 +17,11 @@ import io.vertx.ext.web.RoutingContext;
 import java.util.function.Function;
 
 public class NotificationsServices {
+    private static final String LINUX_FILENAME_PATH = "/home/ec2-user/fileName";
+    private static final String WINDOWS_FILENAME_PATH = "C:\\Sandbox\\smp\\src\\main\\resources\\fileName";
+    private static final String LINUX_TEST_PDF = "/home/ec2-user/test.pdf";
+    private static final String WINDOWS_TEST_PDF = "C:\\Sandbox\\smp\\test.pdf";
+
     public static void sendDynamicMail(Logger logger, String emailAddress, String fileName, Vertx vertx, RoutingContext routingContext, Object... args) {
         Function func = result -> {
             MailFormat mailFormat = new MailFormat();
@@ -60,9 +65,9 @@ public class NotificationsServices {
                     html = String.format(htmlString, new Object[] { html });
                     mailFormat.setSubject("Report");
                     mailFormat.setTo(emailAddress);
-                    FileUtil.overWriteFileContents("/home/ec2-user/fileName", html);
+                    FileUtil.overWriteFileContents(WINDOWS_FILENAME_PATH, html);
                     CryptoEmail.generatePDFFromHTML("fileName");
-                    Buffer buffer = vertx.fileSystem().readFileBlocking("/home/ec2-user/test.pdf");
+                    Buffer buffer = vertx.fileSystem().readFileBlocking(WINDOWS_TEST_PDF);
                     MailAttachment attachment = CryptoEmail.createAttachment(buffer, "application/pdf", "Report");
                     MailMessage mailMessage = CryptoEmail.getMaileMessage(mailFormat, attachment);
                     CryptoEmail.sendEmail(vertx, mailMessage, routingContext);

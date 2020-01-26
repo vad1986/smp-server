@@ -14,9 +14,9 @@ public class DbConfig {
             .put("user", "vadim")
             .put("password", "vad2000!")
             .put("driver_class", "com.mysql.jdbc.Driver")
-            .put("max_pool_size", Integer.valueOf(30))
-
-            .put("autoReconnect", Boolean.valueOf(true));
+            .put("max_pool_size", 30)
+            .put("max_idle_time", 10)
+            .put("autoReconnect", Boolean.TRUE);
 
     public static void getMongoConfig(Vertx vertx, final Handler<JsonObject> method) {
         Function<JsonObject, Void> func = new Function<JsonObject, Void>() {

@@ -43,6 +43,7 @@ public class MessageLog {
     }
 
     public static void sendErrorCode(RoutingContext routingContext, MessageConfig.MessageKey messageKey, String errorMessage, Logger logger) {
+       if(routingContext!=null && !routingContext.response().ended())
         logger.error(sendMessageCode(routingContext, messageKey, errorMessage));
     }
 

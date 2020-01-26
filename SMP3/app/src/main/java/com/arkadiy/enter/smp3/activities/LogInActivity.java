@@ -104,6 +104,8 @@ public class LogInActivity extends AppCompatActivity implements DialogforgotPass
                     null, requestQueue, LogInActivity.this,
                     Constants.METHOD_GET, handler -> {
                         try {
+                            System.out.println("++++ CHECKED PRIVATE KEY  ++++++");
+
                             Bundle bundle = handler.getData();
                             JSONObject jsonRespons;
                             if (bundle.getString("json") != null) {

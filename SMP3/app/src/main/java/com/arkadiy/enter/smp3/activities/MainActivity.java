@@ -30,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.arkadiy.enter.smp3.R;
 import com.arkadiy.enter.smp3.config.AppConfig;
 import com.arkadiy.enter.smp3.config.ResponseCode;
+import com.arkadiy.enter.smp3.dataObjects.Alert;
+import com.arkadiy.enter.smp3.dataObjects.Task;
 import com.arkadiy.enter.smp3.dataObjects.User;
 import com.arkadiy.enter.smp3.dataObjects.Users;
 import com.arkadiy.enter.smp3.services.DataServices;
@@ -71,7 +73,8 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setAlertHandler();
+        setTasksHandler();
 
 
         USERS =  new HashMap<>();
@@ -107,6 +110,44 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
         GlobalServices.addListener(toolbar,this);
 
 
+    }
+
+    private void setTasksHandler() {
+            User.setTaskHandler(handler->{
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String taskString= handler.getData().getString("task");
+                            JSONObject jsonTask=new JSONObject(taskString);
+                            Task task=new Task(jsonTask);
+                            Alert alert=new Alert(1,task.getNameTask(),task.getDescription());
+                            String message="New Task" +" Task Name: " +alert.getName();
+                            User.notifyApp(alert,message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                return false;
+            });
+    }
+
+    private void setAlertHandler() {
+        User.setAlertHandler(handler->{
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+            setIncommingMessages();
+                }
+            });
+            return false;
+
+        });
     }
 
 
@@ -154,6 +195,8 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
         //addNewTaskButton = (Button)findViewById(R.id.addNewTask_Button);
 
         alertButton = (Button)findViewById(R.id.communication_Button);
+
+
         managerOptionsButton =(Button)findViewById(R.id.manager_options);
         adminOptionsButton = (Button)findViewById(R.id.admin_options);
         managerOptionsButton.setVisibility(View.GONE);
@@ -183,7 +226,7 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
         alertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CommuicationActivity.class);
+                Intent intent = new Intent(MainActivity.this,IncomingAlerts.class);
                 startActivity(intent);
             }
         });
@@ -318,5 +361,14 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
         });
     }
 
+    public  void setIncommingMessages(){
+        alertButton.setCompoundDrawablesWithIntrinsicBounds
+                (0, R.drawable.ic_promotion, R.drawable.ic_message, 0);
+    }
+
+    public  void cancelIncomingMessages(){
+        alertButton.setCompoundDrawablesWithIntrinsicBounds
+                (0, R.drawable.ic_promotion, 0, 0);
+    }
 
 }

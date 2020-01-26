@@ -13,7 +13,8 @@ public class UpConfig {
 
     public static int SOCKET_PORT = 8082;
 
-    public static String DOMAIN = "15.188.69.193";
+    public static String DOMAIN = "10.0.0.4";
+//    public static String DOMAIN = "15.188.69.193";
 
     public static String URL = DOMAIN + ":" + PORT;
 

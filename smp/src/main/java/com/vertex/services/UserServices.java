@@ -59,7 +59,7 @@ public class UserServices {
                 return -1;
             return 0;
         }
-        userPunchClockAttempts.put(Integer.valueOf(userId), Integer.valueOf(num));
+        userPunchClockAttempts.put(userId, num);
         return 0;
     }
 
@@ -79,8 +79,8 @@ public class UserServices {
         final String finalUserName = userName;
         Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM && result
-                        .getJsonArray("data").getInteger(4).intValue() == 0) {
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM && result
+                        .getJsonArray("data").getInteger(4) == 0) {
                     try {
                         JsonObject response = new JsonObject();
                         JsonArray outParams = result.getJsonArray("data");
@@ -99,16 +99,16 @@ public class UserServices {
                         User user = ObjectMapperUtils.mapUser(userJson.toString());
                         user.setPrivateKey(finalPrivateKey);
                         UsersCollection.logInUser(user);
-                        response.put("user_id", Integer.valueOf(user.getUserID()));
-                        response.put("sex", Integer.valueOf(user.getSex()));
+                        response.put("user_id", user.getUserID());
+                        response.put("sex", user.getSex());
                         response.put("street", user.getStreet());
-                        response.put("houseNumber", Integer.valueOf(user.getHouseNumber()));
-                        response.put("doorNumber", Integer.valueOf(user.getDoorNumber()));
-                        response.put("managerId", Integer.valueOf(user.getManagerId()));
+                        response.put("houseNumber", user.getHouseNumber());
+                        response.put("doorNumber", user.getDoorNumber());
+                        response.put("managerId", user.getManagerId());
                         response.put("mail", user.getEmail());
-                        response.put("role", Integer.valueOf(user.getUserRole()));
-                        response.put("gps", Integer.valueOf(user.getGps()));
-                        response.put("departmentId", Integer.valueOf(user.getDepartmentId()));
+                        response.put("role", user.getUserRole());
+                        response.put("gps", user.getGps());
+                        response.put("departmentId", user.getDepartmentId());
                         response.put("user_name", user.getUserName());
                         response.put("private_key", user.getPrivateKey());
                         response.put("roles_data", globalRoles.remove("q200"));
@@ -132,7 +132,7 @@ public class UserServices {
             }
         };
         JsonArray in = new JsonArray();
-        in.add(Long.valueOf(userId));
+        in.add(userId);
         if (userName != null) {
             in.add(userName);
         } else {
@@ -173,7 +173,7 @@ public class UserServices {
             try {
                 Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
                     public Void apply(JsonObject result) {
-                        if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+                        if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                             JsonObject resultSet = result.getJsonObject("data").getJsonArray("q200").getJsonObject(0);
                             MessageLog.sendMessageObject(routingContext, MessageConfig.MessageKey.GET_PUNCH_CLOCK_PARAMS, resultSet, UserServices.logger);
                         } else {
@@ -294,7 +294,7 @@ public class UserServices {
                 .getHeader("user_id"));
         Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                     MessageLog.sendMessageObject(routingContext, MessageConfig.MessageKey.GET_OPEN_TASKS,
                             ResponseUtil.assembleMessage(result), UserServices.logger);
                 } else {
@@ -304,21 +304,24 @@ public class UserServices {
                 return null;
             }
         };
+
+        //function here
+
     }
 
     public void sendNewMessage(RoutingContext routingContext) {
         int userId = Integer.parseInt(routingContext.request()
                 .getHeader("user_id"));
         JsonObject message = routingContext.getBodyAsJson();
-        int messageId = routingContext.getBodyAsJson().getInteger("message_id").intValue();
-        int userIdTo = message.getInteger("user_id_to").intValue();
+        int messageId = routingContext.getBodyAsJson().getInteger("message_id");
+        int userIdTo = message.getInteger("user_id_to");
         JsonObject sentence = ChatServices.getSentence(messageId);
         message.put("message", sentence);
-        message.put("user_id_to", Integer.valueOf(userIdTo));
-        message.put("user_id_from", Integer.valueOf(userId));
+        message.put("user_id_to", userIdTo);
+        message.put("user_id_from", userId);
         if (sentence != null) {
             this.eventBus.send("message", message, res -> {
-                if (res.succeeded() && ((JsonObject)((Message)res.result()).body()).getInteger("response_code").intValue() < MessageConfig.MessageKey.ERROR_CODE.val()) {
+                if (res.succeeded() && ((JsonObject) ((Message) res.result()).body()).getInteger("response_code") < MessageConfig.MessageKey.ERROR_CODE.val()) {
                     MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.SOCKET_MESSAGE_SEND, "Successfully sent message through soocket", logger);
                 } else {
                     MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.MESSAGE_ERROR, "Failed to send message to communication server. Response came back false", logger);
@@ -335,7 +338,7 @@ public class UserServices {
         int status = Integer.parseInt(routingContext.request().getParam("status"));
         Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                     MessageLog.sendMessageObject(routingContext, MessageConfig.MessageKey.GET_OPEN_TASKS,
                             ResponseUtil.assembleMessage(result), UserServices.logger);
                 } else {
@@ -345,7 +348,7 @@ public class UserServices {
                 return null;
             }
         };
-        dbLayer.selectFunction(func, String.format(SqlQueries.GET_USER_TASKS, new Object[] { Integer.valueOf(userId), Integer.valueOf(status) }));
+        dbLayer.selectFunction(func, String.format(SqlQueries.GET_USER_TASKS, userId, Integer.valueOf(status)));
     }
 
     public void returnError(RoutingContext routingContext) {
@@ -401,7 +404,7 @@ public class UserServices {
     public void getLoggedInUsers() {
         Function<JsonObject, Void> afterDb = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
                     JsonArray array = result.getJsonObject("data").getJsonArray("q200");
                     array.forEach(user -> {
                         try {
@@ -430,8 +433,8 @@ public class UserServices {
             final int userId = Integer.parseInt(routingContext.request().getHeader("user_id"));
             Function<JsonObject, Void> afterDb = new Function<JsonObject, Void>() {
                 public Void apply(JsonObject result) {
-                    if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM && result
-                            .getJsonArray("data").getInteger(3).intValue() == 0) {
+                    if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM && result
+                            .getJsonArray("data").getInteger(3) == 0) {
                         MessageLog.sendMessageCode(routingContext, MessageConfig.MessageKey.LOG_OUT, "User " + userName + " logged out of the system", UserServices
                                 .logger);
                         JsonObject json = new JsonObject();
@@ -459,13 +462,16 @@ public class UserServices {
 
     public void getUserChatConfig(RoutingContext routingContext) {}
 
-    public void checkPrivateKey(final RoutingContext routingContext) {
+    public void checkPrivateKey(RoutingContext routingContext) {
+        WorkerExecutor executor = vertx.createSharedWorkerExecutor("checkPrivateKey" + routingContext.toString());
+        executor.executeBlocking(future -> {
+            try {
         final int userId = Integer.parseInt(routingContext.request().getParam("user_id"));
         String key = routingContext.request().getParam("key");
         Function<JsonObject, Void> afterDb = new Function<JsonObject, Void>() {
             public Void apply(JsonObject result) {
-                if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
-                    int status = result.getJsonObject("data").getInteger("stat").intValue();
+                if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
+                    int status = result.getJsonObject("data").getInteger("stat");
                     if (status == 1) {
                         try {
                             UserServices.this.login(routingContext, false);
@@ -484,7 +490,17 @@ public class UserServices {
                 return null;
             }
         };
-        dbLayer.selectFunction(afterDb, String.format(SqlQueries.CHECK_PRIVATE_KEY, new Object[] { Integer.valueOf(userId), key }));
+        dbLayer.selectFunction(afterDb, String.format(SqlQueries.CHECK_PRIVATE_KEY, userId, key));
+
+            } catch (Exception e) {
+                MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.PRIVATE_KEY_FAIL, "Failed to check private key"
+                        , logger);
+            } finally {
+                executor.close();
+            }
+        },x -> {
+
+        });
     }
 
     public void forgotPassword(RoutingContext routingContext) {
@@ -496,8 +512,8 @@ public class UserServices {
                 String mail = body.getString("mail");
                 Function<JsonObject, Void> afterDb = new Function<JsonObject, Void>() {
                     public Void apply(JsonObject result) {
-                        if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
-                            int status = result.getJsonObject("data").getInteger("stat").intValue();
+                        if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
+                            int status = result.getJsonObject("data").getInteger("stat");
                             if (status == 1) {
                                 try {
                                     UserServices.this.login(routingContext, false);
@@ -517,7 +533,7 @@ public class UserServices {
                     }
                 };
 
-                dbLayer.selectFunction(afterDb, String.format(SqlQueries.FORGOT_PASSWORD, new Object[] { userName, mail }));
+                dbLayer.selectFunction(afterDb, String.format(SqlQueries.FORGOT_PASSWORD, userName, mail));
             } catch (Exception e) {
                 MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.FORGOT_PASSWORD_ERROR, "Failed to send password do to following Exception " + e.getMessage(), logger);
             } finally {

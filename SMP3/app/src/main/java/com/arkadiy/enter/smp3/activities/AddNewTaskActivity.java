@@ -110,11 +110,17 @@ public class AddNewTaskActivity extends AppCompatActivity  {
                 String description = taskDecriptionEditText.getText().toString();
                 task = personal?new Task(id,start,end,taskName,description):new Task(start,end,taskName,description,id);
                 //DataServices.sendTask(task.getTask(),requestQueue,AddNewTaskActivity.this);
-                User.sendNewTask(personal,AddNewTaskActivity.this,task.getTask(),requestQueue,sendTaskHandler->{
 
-                    resetActivity();
-                    return true;
-                });
+                if(!taskName.equals("") && !start.equals("") && !end.equals("") && !description.equals("")){
+                    User.sendNewTask(personal,AddNewTaskActivity.this,task.getTask(),requestQueue,sendTaskHandler->{
+
+                        resetActivity();
+                        return true;
+                    });
+                }else{
+                    Toast.makeText(getApplicationContext(),"One of the fields is empty", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -142,7 +148,6 @@ public class AddNewTaskActivity extends AppCompatActivity  {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selecteduser = currentUsers.get(i);
                 id = selecteduser.getUserId();
-                Toast.makeText(getApplicationContext(),String.valueOf(currentUsers.get(i).getUserId()), Toast.LENGTH_LONG).show();
 
             }
 

@@ -2,6 +2,7 @@ package com.vertex.db;
 
 import com.vertex.config.DbConfig;
 import com.vertex.config.MessageConfig;
+import com.vertex.config.MessageLog;
 import com.vertex.config.ResponseUtil;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Vertx;
@@ -13,6 +14,8 @@ import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
+import io.vertx.ext.sql.SQLOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -33,6 +36,7 @@ public class DbLayer {
         this.sqlClient.getConnection((con) -> {
             if (con.succeeded()) {
                 SQLConnection connection = (SQLConnection)con.result();
+                connection.setOptions(new SQLOptions().setQueryTimeout(10));
                 connection.callWithParams(sql, in, out, (res) -> {
                     String outStr = "";
                     if (res.succeeded()) {
@@ -41,9 +45,10 @@ public class DbLayer {
 
                         try {
                             jsonObject = getOutSlashes(jsonObject.toString());
-                        } catch (Exception var14) {
-                            this.logger.error(var14);
+                        } catch (Exception e) {
+                            this.logger.error(e);
                         } finally {
+                            connection.close();
                             nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.OK, sql, this.logger).put("id", id).put("data", jsonObject.getJsonArray("data")));
                         }
                     } else {
@@ -59,30 +64,44 @@ public class DbLayer {
     }
 
 
+
     public void callSelectProcedure(Function<JsonObject, Void> nextMethod, String sql, JsonArray in, JsonArray out, String id) throws Exception {
         this.sqlClient.getConnection((con) -> {
-            if (con.succeeded()) {
-                SQLConnection connection = (SQLConnection)con.result();
-                connection.callWithParams(sql, in, out, (res) -> {
-                    String outStr = "";
-                    if (res.succeeded()) {
-                        ResultSet rs = (ResultSet)res.result();
-                        List<JsonObject> resultList = new ArrayList();
-                        if (rs != null) {
-                            resultList = rs.getRows();
-                        }
 
-                        nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.OK, sql, this.logger).put("id", id).put("data", resultList));
-                    } else {
-                        nextMethod.apply((new JsonObject()).put("cause", res.cause()));
+            if (con.succeeded()) {
+                System.out.println("connections "+this.sqlClient);
+                SQLConnection connection = (SQLConnection)con.result();
+                connection.setOptions(new SQLOptions().setQueryTimeout(10));
+                connection.callWithParams(sql, in, out, (res) -> {
+
+                    try{
+                        String outStr = "";
+                        if (res.succeeded()) {
+                            ResultSet rs = (ResultSet)res.result();
+                            List<JsonObject> resultList = new ArrayList();
+                            if (rs != null) {
+                                resultList = rs.getRows();
+                            }
+
+                            nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.OK, sql, this.logger).put("id", id).put("data", resultList));
+                        } else {
+                            nextMethod.apply((new JsonObject()).put("cause", res.cause()));
+                        }
+                    }catch (Exception e){
+                        nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.DB_CONNECTION_FAILED,
+                                "FAILED IN callSelectProcedure() "+"Failed to get connection " + sql + " : " + con.cause().getMessage(), this.logger, con.cause()));
+
+                    }finally {
+                        connection.close((done) -> {
+                            if (done.failed()) {
+                                this.logger.error(done.cause());
+                            }
+
+                        });
                     }
 
-                    connection.close((done) -> {
-                        if (done.failed()) {
-                            this.logger.error(done.cause());
-                        }
 
-                    });
+
                 });
             } else {
                 nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.DB_CONNECTION_FAILED, "Failed to get connection " + sql + " : " + con.cause().getMessage(), this.logger, con.cause()));
@@ -124,9 +143,10 @@ public class DbLayer {
     }
 
     public void selectFunction(Function<JsonObject, Void> nextMethod, String sql) {
-        this.sqlClient.getConnection((res) -> {
+     this.sqlClient.getConnection((res) -> {
             if (res.succeeded()) {
                 SQLConnection connection = (SQLConnection)res.result();
+                connection.setOptions(new SQLOptions().setQueryTimeout(10));
                 connection.query(sql, (res2) -> {
                     if (res2.succeeded()) {
                         ResultSet rs = (ResultSet)res2.result();
@@ -136,10 +156,18 @@ public class DbLayer {
 
                         try {
                             jsonObject = getOutSlashes2(outStr);
-                        } catch (Exception var12) {
-                            this.logger.error(var12);
+                        } catch (Exception e) {
+                            nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.DB_SQL_ERROR,
+                                    e.getMessage()+" for sql: "+sql, logger).put("data", jsonObject));
                         } finally {
                             nextMethod.apply(ResponseUtil.getAsJson(MessageConfig.MessageKey.OK, sql, this.logger).put("data", jsonObject));
+
+                            connection.close((done) -> {
+                                if (done.failed()) {
+                                    this.logger.error(done.cause());
+                                }
+
+                            });
                         }
                     }
 
@@ -149,5 +177,6 @@ public class DbLayer {
             }
 
         });
+
     }
 }

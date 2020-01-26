@@ -13,6 +13,7 @@
     <color name="black">#000000</color>
     <string name="title_activity_welcome_page">WelcomePage</string>
     <string name="title_activity_saved">saved</string>
+    <string name="title_activity_incoming_alerts">IncomingAlertsActivity</string>
 
 
 </resources>

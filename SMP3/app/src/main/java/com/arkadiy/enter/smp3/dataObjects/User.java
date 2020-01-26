@@ -42,6 +42,7 @@ public class User {
 
     private static IHandler taskActivityHandler;
     private static NotificationManagerCompat notificationManager;
+    private static IHandler alertActivityHandler;
     private long userId;
     private String userName;
     private String userFirstName;
@@ -87,55 +88,62 @@ public class User {
     public User(JSONObject jsonObject) {
 
         try {
+            if(allDataExists(jsonObject)){
+                this.city = jsonObject.getString("city");
+                this.email = jsonObject.getString("email");
+                this.status = jsonObject.getInt("status");
+                this.userId = jsonObject.getLong("userID");
+                //TODO i need get this parameters from server
+                this.street = jsonObject.getString("street");
 
-//                    "gps" : 1,
-//                    "sex" : 1,
-//                    "city" : "yehud",
-//                    "email" : "ahshjbsh@mail.com",
-//                    "status" : 2,
-//                    "street" : "histadrut",
-//                    "userID" : 137,
-//                    "password" : "araara123",
-//                    "userName" : "Oleg",
-//                    "userRole" : 2,
-//                    "managerId" : 12,
-//                    "telephone" : "0546567712",
-//                    "doorNumber" : 1,
-//                    "houseNumber" : 2,
-//                    "userLastName" : "Piskub",
-//                    "userFirstName" : "Oleg"
+                this.houseNumber = jsonObject.optInt("houseNumber");
+                this.sex = jsonObject.optInt("sex");
+                this.doorNumber = jsonObject.optInt("doorNumber");
+                this.telephone = jsonObject.optInt("telephone");
+                this.userName = jsonObject.getString("userName");
+                this.password = jsonObject.getString("password");
+                this.role = jsonObject.getInt("userRole");
 
-
-            this.city = jsonObject.getString("city");
-            this.email = jsonObject.getString("email");
-            this.status = jsonObject.getInt("status");
-            this.userId = jsonObject.getLong("userID");
-            //TODO i need get this parameters from server
-            this.street = jsonObject.getString("street");
-
-            this.houseNumber = jsonObject.optInt("houseNumber");
-            this.sex = jsonObject.optInt("sex");
-            this.doorNumber = jsonObject.optInt("doorNumber");
-            this.telephone = jsonObject.optInt("telephone");
-            this.userName = jsonObject.getString("userName");
-            this.password = jsonObject.getString("password");
-            this.role = jsonObject.getInt("userRole");
-
-            this.managerId = jsonObject.optInt("managerId");
-            this.phone = jsonObject.getString("telephone");
-            this.userFirstName = jsonObject.getString("userFirstName");
-            this.userLastName = jsonObject.getString("userLastName");
-            this.myEmail = jsonObject.getString("email");
-            //TODO: create GPS parameters
-            //TODO: check if simple user get value -1 if yes delete operator if
+                this.managerId = jsonObject.optInt("managerId");
+                this.phone = jsonObject.getString("telephone");
+                this.userFirstName = jsonObject.getString("userFirstName");
+                this.userLastName = jsonObject.getString("userLastName");
+                this.myEmail = jsonObject.getString("email");
+                //TODO: create GPS parameters
+                //TODO: check if simple user get value -1 if yes delete operator if
                 this.departmentId = jsonObject.getInt(ConstantsJson.DEPARTMENT_ID);
-
+            }else{
+                System.out.println("++++++++++++   User doesn't have all the needed data ++++++++++++");
+            }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    private boolean allDataExists(JSONObject jsonObject) {
+
+       return jsonObject.has("city") &&
+        jsonObject.has("email") &&
+        jsonObject.has("status") &&
+        jsonObject.has("userID") &&
+        jsonObject.has("street") &&
+        jsonObject.has("houseNumber") &&
+        jsonObject.has("sex") &&
+        jsonObject.has("doorNumber") &&
+        jsonObject.has("telephone") &&
+        jsonObject.has("userName") &&
+        jsonObject.has("password") &&
+        jsonObject.has("userRole") &&
+        jsonObject.has("managerId") &&
+        jsonObject.has("telephone") &&
+        jsonObject.has("userFirstName") &&
+        jsonObject.has("userLastName") &&
+        jsonObject.has("email") &&
+        jsonObject.has(ConstantsJson.DEPARTMENT_ID);
 
     }
 
@@ -196,6 +204,9 @@ public class User {
     public static void setTaskHandler(IHandler handler) {
         User.taskActivityHandler=handler;
     }
+    public static void setAlertHandler(IHandler handler) {
+        User.alertActivityHandler=handler;
+    }
 
     public static void setMyDepartment(Department myDepartment) {
         User.myDepartment = myDepartment;
@@ -254,10 +265,10 @@ public class User {
     }
 
     public static void successfulLoginAndFillData(JSONObject jsonRespons){
-        SocketServices messageSender=new SocketServices();
-        messageSender.execute();
         saveUser(jsonRespons);
         Store.fillStoreData(jsonRespons);
+        SocketServices messageSender=new SocketServices();
+        messageSender.execute();
         Intent intent = new Intent(App.getContext(), MainActivity.class);
         App.getContext().startActivity(intent);
     }
@@ -439,7 +450,7 @@ public class User {
         return  null;
     }
     public static void getAlertFromSocket(Alert alert){
-        String fromUser = null;
+        String fromUser = "";
         for (int i = 0 ; i<Store.sizeUserOnline() ; i++){
 
             try {
@@ -451,17 +462,27 @@ public class User {
             }
 
         }
+        Message msg = new Message();
+        Bundle bundle=new Bundle();
+        bundle.putString("alert","");
+        msg.setData(bundle);
+        alertActivityHandler.sendMessage(msg);
+        notifyApp(alert,"New Alert from user: " + fromUser +" Title: " +alert.getName());
+
+
+    }
+
+    public static void notifyApp(Alert alert,String message){
         notificationManager = NotificationManagerCompat.from(App.getContext());
         Notification notification = new NotificationCompat.Builder(App.getContext(),CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("Got alert from user: " + fromUser +" Title: " +alert.getName())
+                .setContentTitle(message)
                 .setContentText(alert.getDescription())
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
 
         notificationManager.notify(1,notification);
-
     }
     public int getDepartmentId() {
         return departmentId;

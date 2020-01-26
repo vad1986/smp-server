@@ -19,7 +19,7 @@
         />
 
     <solid
-        android:color="@color/colorLight"
+        android:color="@color/weird"
 
         />
 

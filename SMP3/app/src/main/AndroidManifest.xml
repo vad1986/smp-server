@@ -20,7 +20,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.loadingActivity"></activity>
+        <activity android:name=".activities.IncomingAlerts"></activity>
+        <activity android:name=".activities.loadingActivity" />
         <activity
             android:name=".saved"
             android:label="@string/title_activity_saved"

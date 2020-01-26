@@ -2,6 +2,7 @@ package com.vertex.dataObjects;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.vertex.config.MessageConfig;
@@ -67,10 +68,11 @@ public class CryptoEmail {
 
     public static Document generatePDFFromHTML(String filename) throws IOException, DocumentException {
         Document document = new Document();
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("test.pdf"));
+        Paragraph paragraph1 = new Paragraph("This is SettingPdfAttributesExample.pdf");
         document.open();
+        document.add(paragraph1);
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("test.pdf"));
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(filename));
-        document.close();
         return document;
     }
 

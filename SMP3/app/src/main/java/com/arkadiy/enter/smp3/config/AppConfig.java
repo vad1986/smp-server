@@ -5,6 +5,7 @@ public class AppConfig {
 //    public static String AWS="http://15.188.69.193";
 //    public static String LOCAL="localhost";
 //    public static String LOCAL="http://10.0.0.9";
+//    public static String LOCAL="http://172.20.10.4";
     public static String LOCAL="http://10.0.0.4";
     public static String MAIN_SERVER_IP=LOCAL;
     public static String SOCKET_SERVER_URL="";

@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,19 +60,19 @@ public class SocketServices {
         WorkerExecutor executor = this.vertx.createSharedWorkerExecutor("sendNewMessage" + msg.toString());
         executor.executeBlocking(future -> {
             try {
-                JsonObject jsonObject = (JsonObject)msg.body();
-                int userId = jsonObject.getInteger("user_id_to").intValue();
-                int userIdFrom = jsonObject.getInteger("user_id_from").intValue();
-                jsonObject.getJsonObject("message").put("user_id_from", Integer.valueOf(userIdFrom));
+                JsonObject jsonObject = (JsonObject) msg.body();
+                int userId = jsonObject.getInteger("user_id_to");
+                int userIdFrom = jsonObject.getInteger("user_id_from");
+                jsonObject.getJsonObject("message").put("user_id_from", userIdFrom);
                 String messageString = jsonObject.getJsonObject("message").put("command", "alert").toString();
                 sendActualMessage(userId, msg, messageString);
             } catch (Exception e) {
                 MessageLog.logMessage("Failed sending new message through socket due to thefollowing Exception: " + e.getMessage(), this.logger);
-                msg.reply((new JsonObject()).put("response_code", Integer.valueOf(MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val())));
+                msg.reply((new JsonObject()).put("response_code", MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val()));
             } finally {
                 executor.close();
             }
-        },x -> {
+        }, x -> {
 
         });
     }
@@ -82,10 +83,10 @@ public class SocketServices {
         if (socket != null) {
             socket.writeTextMessage(messageString);
             MessageLog.logMessage("Successfully sent message to user: " + userId, this.logger);
-            msg.reply((new JsonObject()).put("response_code", Integer.valueOf(MessageConfig.MessageKey.SOCKET_MESSAGE_SEND.val())));
+            msg.reply((new JsonObject()).put("response_code", MessageConfig.MessageKey.SOCKET_MESSAGE_SEND.val()));
         } else {
-            MessageLog.logMessage("Failed sending new message through socket.No socket addresswas found in the connected users map assosiated with userId: " + userId, this.logger);
-            msg.reply((new JsonObject()).put("response_code", Integer.valueOf(MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val())));
+            MessageLog.logMessage("Failed sending new message through socket.No socket address was found in the connected users map assosiated with userId: " + userId, this.logger);
+            msg.reply((new JsonObject()).put("response_code", MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val()));
         }
     }
 
@@ -97,7 +98,7 @@ public class SocketServices {
         switch (command) {
             case "subscribe":
                 System.out.println("subscribe");
-                userId = json.getInteger("user_id").intValue();
+                userId = json.getInteger("user_id");
                 name = json.getString("user_name");
                 addUserWebSocket(new User(userId, name), serverWebSocket);
                 sendCommandToAll(json);
@@ -128,16 +129,16 @@ public class SocketServices {
         WorkerExecutor executor = this.vertx.createSharedWorkerExecutor("logoutUser" + msg.toString());
         executor.executeBlocking(future -> {
             try {
-                JsonObject jsonObject = (JsonObject)msg.body();
+                JsonObject jsonObject = (JsonObject) msg.body();
                 jsonObject.put("command", "task");
-                int userId = jsonObject.getInteger("user_id").intValue();
+                int userId = jsonObject.getInteger("user_id");
                 sendActualMessage(userId, msg, jsonObject.toString());
             } catch (Exception e) {
-                msg.reply((new JsonObject()).put("response_code", Integer.valueOf(MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val())));
+                msg.reply((new JsonObject()).put("response_code", MessageConfig.MessageKey.SOCKET_MESSAGE_SEND_ERROR.val()));
             } finally {
                 executor.close();
             }
-        },x -> {
+        }, x -> {
 
         });
     }
@@ -146,7 +147,7 @@ public class SocketServices {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  REMOVED USER " + user.getUserID() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if (connectedUsers != null) {
             connectedUsers.remove(user);
-            sendCommandToAll((new JsonObject()).put("command", "unsubscribe").put("user_name", user.getUserName()).put("user_id", Integer.valueOf(user.getUserID())));
+            sendCommandToAll((new JsonObject()).put("command", "unsubscribe").put("user_name", user.getUserName()).put("user_id", user.getUserID()));
         }
     }
 
@@ -162,8 +163,8 @@ public class SocketServices {
         WorkerExecutor executor = this.vertx.createSharedWorkerExecutor("logoutUser" + msg.toString());
         executor.executeBlocking(future -> {
             try {
-                JsonObject jsonObject = (JsonObject)msg.body();
-                int userId = jsonObject.getInteger("user_id").intValue();
+                JsonObject jsonObject = (JsonObject) msg.body();
+                int userId = jsonObject.getInteger("user_id");
                 String name = jsonObject.getString("user_name");
                 removeConnectedUser(new User(userId, name));
                 sendCommandToAll(jsonObject);
@@ -172,7 +173,7 @@ public class SocketServices {
             } finally {
                 executor.close();
             }
-        },x -> {
+        }, x -> {
 
         });
     }
@@ -181,7 +182,7 @@ public class SocketServices {
         WorkerExecutor executor = this.vertx.createSharedWorkerExecutor("sendNewAlert" + msg.toString());
         executor.executeBlocking(future -> {
             try {
-                JsonObject jsonObject = (JsonObject)msg.body();
+                JsonObject jsonObject = (JsonObject) msg.body();
                 jsonObject.put("command", "new_alert");
                 sendCommandToAll(jsonObject);
             } catch (Exception e) {
@@ -189,7 +190,7 @@ public class SocketServices {
             } finally {
                 executor.close();
             }
-        },x -> {
+        }, x -> {
 
         });
     }
@@ -206,14 +207,14 @@ public class SocketServices {
             } finally {
                 executor.close();
             }
-        },x -> {
+        }, x -> {
 
         });
     }
 
     private JsonArray getUsersJsonArray() {
         JsonArray array = new JsonArray();
-        connectedUsers.forEach((user, socket) -> array.add((new JsonObject()).put("user_name", user.getUserName()).put("user_id", Integer.valueOf(user.getUserID()))));
+        connectedUsers.forEach((user, socket) -> array.add((new JsonObject()).put("user_name", user.getUserName()).put("user_id", user.getUserID())));
         return array;
     }
 }

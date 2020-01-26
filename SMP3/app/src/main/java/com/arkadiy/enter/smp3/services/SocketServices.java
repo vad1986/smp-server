@@ -8,6 +8,7 @@ import com.arkadiy.enter.smp3.config.AppConfig;
 import com.arkadiy.enter.smp3.dataObjects.Alert;
 import com.arkadiy.enter.smp3.dataObjects.Store;
 import com.arkadiy.enter.smp3.dataObjects.User;
+import com.arkadiy.enter.smp3.utils.FileService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +86,11 @@ public class SocketServices extends AsyncTask<String,Void,Void> {
             request = new Request.Builder().url(AppConfig.SOCKET_SERVER_URL).build();
             EchoWebSocketListener listener = new EchoWebSocketListener();
             ws = client.newWebSocket(request, listener);
+            System.out.println("++++ SENT THROUGH SOCKET  ++++++");
+
+        }else{
+            System.out.println("++++ ALREADY HAVE A WS  ++++++");
+
         }
 
     }
@@ -93,6 +99,8 @@ public class SocketServices extends AsyncTask<String,Void,Void> {
     protected Void doInBackground(String... strings) {
 
         try {
+            System.out.println("++++ DO IN BACKGROUND  ++++++");
+
             start();
 
 
@@ -120,25 +128,27 @@ public class SocketServices extends AsyncTask<String,Void,Void> {
 
     public void output(final String txt) {
         try {
+            System.out.println("++++ GOT BACK MESSAGE  ++++++");
 
-            JSONObject json=new JSONObject(txt.toString());
-            String command=json.getString("command");
-            switch (command){
-                case "subscribe":
-                    if (App.getContext().getClass() == CommuicationActivity.class){
+            if(FileService.isJSONValid(txt)){
+                JSONObject json=new JSONObject(txt);
+                String command=json.getString("command");
+                switch (command){
+                    case "subscribe":
+                        if (App.getContext().getClass() == CommuicationActivity.class){
 
-                        CommuicationActivity.addOnlineUser(json);
-                    }
-                    else {
-                        Store.doSubscribe(json);
-                    }
-                    break;
+                            CommuicationActivity.addOnlineUser(json);
+                        }
+                        else {
+                            Store.doSubscribe(json);
+                        }
+                        break;
 
-                case "task":
-                    User.addNewTask(json);
+                    case "task":
+                        User.addNewTask(json);
 
 
-                    break;
+                        break;
 
                     case "alert":
 
@@ -147,20 +157,24 @@ public class SocketServices extends AsyncTask<String,Void,Void> {
                         break;
 
                     //{"command":"unsubscribe","user_name":"arkadi","user_id":2}
-                   case "unsubscribe":
+                    case "unsubscribe":
                         if (App.getContext().getClass() == CommuicationActivity.class){
 
                             CommuicationActivity.removeUser(json.getString("user_name"));
 
                         }
-                       break;
-                case "new_alert":
+                        break;
+                    case "new_alert":
 
-                    if (App.getContext().getClass() == CommuicationActivity.class){
+                        if (App.getContext().getClass() == CommuicationActivity.class){
 
-                        Store.setNewAlert(json);
-                    }
+                            Store.setNewAlert(json);
+                        }
 
+                }
+
+            }else{
+                System.out.println("Came back from socket !!! "+txt);
             }
 
         } catch (JSONException e) {
@@ -170,6 +184,8 @@ public class SocketServices extends AsyncTask<String,Void,Void> {
 
 
     }
+
+
 
 
 

@@ -51,24 +51,24 @@ public class ManagerServices {
                 String dateEnd = jsonObject.getString("date_end");
                 String name = jsonObject.getString("name");
                 String description = jsonObject.getString("description");
-                final int userId = jsonObject.containsKey("user_id") ? jsonObject.getInteger("user_id").intValue() : 0;
-                int groupId = jsonObject.containsKey("group_id") ? jsonObject.getInteger("group_id").intValue() : 0;
-                dateStart = LangUtils.convertToMysqlDateTime(dateStart);
-                dateEnd = LangUtils.convertToMysqlDateTime(dateEnd);
+                final int userId = jsonObject.containsKey("user_id") ? jsonObject.getInteger("user_id") : 0;
+                int groupId = jsonObject.containsKey("group_id") ? jsonObject.getInteger("group_id") : 0;
+//                dateStart = LangUtils.convertToMysqlDateTime(dateStart);
+//                dateEnd = LangUtils.convertToMysqlDateTime(dateEnd);
                 if (managerId == 0 || dateStart == null || dateEnd == null)
                     MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.NEW_TASK_ERROR, "one or more parameters were null" + managerId, logger);
                 Function<JsonObject, Void> func = new Function<JsonObject, Void>() {
                     public Void apply(JsonObject result) {
-                        if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
-                            if (result.getJsonArray("data").getInteger(8).intValue() == 0) {
-                                int taskId = result.getJsonArray("data").getInteger(7).intValue();
-                                jsonObject.put("task_id", Integer.valueOf(taskId));
-                                jsonObject.put("manager_id", Integer.valueOf(managerId));
+                        if (result.getInteger("response_code") < MessageConfig.ERROR_CODE_FROM) {
+                            if (result.getJsonArray("data").getInteger(8) == 0) {
+                                int taskId = result.getJsonArray("data").getInteger(7);
+                                jsonObject.put("task_id", taskId);
+                                jsonObject.put("manager_id", managerId);
                                 MessageLog.sendMessageObject(routingContext, MessageConfig.MessageKey.NEW_TASK, jsonObject, ManagerServices
                                         .logger);
                                 if (userId != 0)
                                     ManagerServices.eventBus.publish("task", jsonObject);
-                            } else if (result.getJsonArray("data").getInteger(8).intValue() == 5) {
+                            } else if (result.getJsonArray("data").getInteger(8) == 5) {
                                 MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.USER_HAS_NO_PERMISSIONS_FOR_THIS_TASK, "This user is a lower role than the user he's trying to set task to" + managerId, ManagerServices
 
                                         .logger);
@@ -96,8 +96,8 @@ public class ManagerServices {
 
     public static void saveTaskInDb(Function func, int userId, int managerId, String dateStart, String dateEnd, String name, String description, int groupId) throws Exception {
         JsonArray in = new JsonArray();
-        in.add(Integer.valueOf(userId));
-        in.add(Integer.valueOf(managerId)).add(dateStart);
+        in.add(userId);
+        in.add(managerId).add(dateStart);
         if (dateEnd != null) {
             in.add(dateEnd);
         } else {
@@ -105,7 +105,7 @@ public class ManagerServices {
         }
         in.add(name).add(description);
         if (groupId != 0) {
-            in.add(Integer.valueOf(groupId));
+            in.add(groupId);
         } else {
             in.addNull();
         }
@@ -541,7 +541,8 @@ public class ManagerServices {
                 public Void apply(JsonObject result) {
                     if (result.getInteger("response_code").intValue() < MessageConfig.ERROR_CODE_FROM) {
                         JsonArray array = ObjectMapperUtils.sortTasksByUsers(result.getJsonArray("data"));
-                        NotificationsServices.sendReportsMail(ManagerServices.logger, mail, array, ManagerServices.this.vertx, "report_tasks.html", routingContext);
+                        NotificationsServices.sendReportsMail(ManagerServices.logger, mail, array,
+                                ManagerServices.this.vertx, "report_tasks.html", routingContext);
                     } else {
                         MessageLog.sendErrorCode(routingContext, MessageConfig.MessageKey.REPORT_ERROR, "Failed to create REPORT in the db due to error in the db", ManagerServices
 

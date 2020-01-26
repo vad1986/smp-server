@@ -15,7 +15,6 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class CommunicationVerticle extends AbstractVerticle {
@@ -29,7 +28,7 @@ public class CommunicationVerticle extends AbstractVerticle {
         super.start(startFuture);
         this.dbLayer = new DbLayer(this.vertx);
         Router router = Router.router(this.vertx);
-        router.route().handler((Handler)BodyHandler.create().setMergeFormAttributes(true));
+        router.route().handler((Handler<io.vertx.ext.web.RoutingContext>)BodyHandler.create().setMergeFormAttributes(true));
         HttpServer server = this.vertx.createHttpServer();
         this.logger.info("Vertix Started on port " + UpConfig.SOCKET_PORT);
         Set<HttpMethod> allowedMethods = new HashSet<>();
@@ -43,23 +42,18 @@ public class CommunicationVerticle extends AbstractVerticle {
         allowdHeaders.add("manager_id");
         allowdHeaders.add("access-control-allow-origin");
         allowdHeaders.add("Content-Type");
-        router.route().handler((Handler)CorsHandler.create("*")
+        router.route().handler((Handler<io.vertx.ext.web.RoutingContext>)CorsHandler.create("*")
                 .allowedMethods(allowedMethods)
                 .allowedHeaders(allowdHeaders)
                 .allowedHeader("Content-Type"));
-        router.route().handler((Handler)BodyHandler.create());
+        router.route().handler((Handler<io.vertx.ext.web.RoutingContext>)BodyHandler.create());
         this.socketServices = new SocketServices(this.vertx);
         this.socketServices.startWebsocket(server);
         EventBus eventBus = this.vertx.eventBus();
-        Objects.requireNonNull(this.socketServices);
         eventBus.consumer("message", this.socketServices::sendNewMessage);
-        Objects.requireNonNull(this.socketServices);
         eventBus.consumer("task", this.socketServices::sendTask);
-        Objects.requireNonNull(this.socketServices);
         eventBus.consumer("logout", this.socketServices::logoutUser);
-        Objects.requireNonNull(this.socketServices);
         eventBus.consumer("online", this.socketServices::getOnlineUsers);
-        Objects.requireNonNull(this.socketServices);
         eventBus.consumer("new_alert", this.socketServices::sendNewAlert);
     }
 

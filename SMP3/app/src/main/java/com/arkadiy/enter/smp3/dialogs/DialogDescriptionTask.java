@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.arkadiy.enter.smp3.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @SuppressLint("ValidFragment")
 public class DialogDescriptionTask extends AppCompatDialogFragment {
 
@@ -27,9 +31,10 @@ public class DialogDescriptionTask extends AppCompatDialogFragment {
     private String dateEnd;
 //itemsList.get(position).getTimeDateStart(),itemsList.get(position).getTimeDateEnd()
     public DialogDescriptionTask(String description,String dateStart,String dateEnd) {
+
         this.description  = description;
-        this.dateStart  = dateStart;
-        this.dateEnd = dateEnd;
+        this.dateStart  = formatDatetime(dateStart);
+        this.dateEnd = formatDatetime(dateEnd);
 
 
     }
@@ -52,9 +57,9 @@ public class DialogDescriptionTask extends AppCompatDialogFragment {
         endTimeDSCTextView = view.findViewById(R.id.endTimeDSC_TextView);
         dialogDescriptionEditText = view.findViewById(R.id.descriptionTask_EditText);
 
-        taskNameDSCTextView.setText( "Name task: "+getTag());
-        startTimeDSCTextView.setText("Start: "+this.dateStart);
-        endTimeDSCTextView.setText("End: "+this.dateEnd);
+        taskNameDSCTextView.setText(getTag());
+        startTimeDSCTextView.setText(this.dateStart);
+        endTimeDSCTextView.setText(this.dateEnd);
         dialogDescriptionEditText.setText(description);
 
         return builder.create();
@@ -73,5 +78,20 @@ public class DialogDescriptionTask extends AppCompatDialogFragment {
 
     public interface DialogCloseTaskListener{
         void applyText(String reason , String tag );
+    }
+
+    public static String formatDatetime(String dateTime){
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date newDate;
+            newDate = format.parse(dateTime);
+            format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String date = format.format(newDate);
+            return date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -40,8 +40,8 @@ public class CommuicationActivity extends AppCompatActivity {
     private static Spinner onlineUserSpinner;
     private Alert alert;
     private static ArrayList<Alert> alerts;
-    private int sendToId;
     private static CustomAdapterAlert customAdapterAlert;
+    private int sendToId;
 
     private static ArrayAdapter onlineUsersAdapter;
     @Override
@@ -63,11 +63,13 @@ public class CommuicationActivity extends AppCompatActivity {
 
                 for (int i = 0 ; i < Store.sizeUserOnline();i++ ){
                     try {
-                        onlineUsers.put(Store.getUsersOnline().getJSONObject(i).getString("user_name"),Store.getUsersOnline().getJSONObject(i).getInt("user_id"));// for spinner
-                        //onlineUsersAdapter.add(Store.getUsersOnline().getJSONObject(i).getString("user_name"));// for spinner
+                        if(Store.getUsersOnline().getJSONObject(i).getInt("user_id")!=User.getMyUserId()){
+                            onlineUsers.put(Store.getUsersOnline().getJSONObject(i).getString("user_name"),Store.getUsersOnline().getJSONObject(i).getInt("user_id"));// for spinner
+                            //onlineUsersAdapter.add(Store.getUsersOnline().getJSONObject(i).getString("user_name"));// for spinner
+                            users.add(Store.getUsersOnline().getJSONObject(i).getString("user_name"));
+                            id.add(Store.getUsersOnline().getJSONObject(i).getInt("user_id"));
+                        }
 
-                        users.add(Store.getUsersOnline().getJSONObject(i).getString("user_name"));
-                        id.add(Store.getUsersOnline().getJSONObject(i).getInt("user_id"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
