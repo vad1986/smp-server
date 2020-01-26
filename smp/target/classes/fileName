@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Tasks Report</title>
+</head>
+<body>
+
+<h2>vadim hasmenik</h2><h3>Tasks Completed</h3><table width='100%' border='1' align='center'><tr align='center'><td><b>Task Name </b></td><td><b>Description</b></td><td><b>Manager Id</b></td><td><b>Date Start</b></td><td><b>Date Finish</b></td></tr><tr align='center'><td><b>trying out front end</b></td><td><b>hey trying out group task for the first time</b></td><td><b>132</b></td><td><b>2019-11-02T15:06:31Z</b></td><td><b>2019-11-02T15:06:31Z</b></td></tr><tr align='center'><td><b>meat dep task</b></td><td><b>task for meat department</b></td><td><b>132</b></td><td><b>2019-11-02T15:06:31Z</b></td><td><b>2019-11-02T15:06:31Z</b></td></tr></table><h2>This user does'nt have Uncompleted Tasks</h2><b>==================================================================</b>
+
+
+</body>
+</html>

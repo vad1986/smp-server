@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+
+    android:layout_height="match_parent"
+    tools:context=".activities.IncomingAlerts">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/incomingAlertTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:fontFamily="@font/bangers"
+        android:gravity="center"
+        android:text="Incoming Alerts"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:visibility="visible" />
+
+    <View
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:paddingBottom="10sp"
+        android:background="@android:color/darker_gray"/>
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/listViewAlerts"
+        android:layout_width="match_parent"
+        android:layout_height="449dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+
+
+    <!--<TextView
+        android:id="@+id/amountOfTasks_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listViewTask"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"/>-->
+
+
+    <ImageButton
+        android:id="@+id/sendNewAlert"
+        android:layout_marginLeft="150sp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_plus">
+    </ImageButton>
+
+
+</LinearLayout>
