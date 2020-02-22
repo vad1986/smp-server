@@ -226,6 +226,15 @@ public class MainActivity extends AppCompatActivity  implements ActivityCompat.O
         alertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        cancelIncomingMessages();
+                    }
+                });
+
                 Intent intent = new Intent(MainActivity.this,IncomingAlerts.class);
                 startActivity(intent);
             }
